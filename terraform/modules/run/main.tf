@@ -1,15 +1,16 @@
-resource "null_resource" "run_shell_script" {
-  provisioner "local-exec" {
-    command = "./push-docker-image.sh"
-    environment = {
-      IMAGE_URL  = local.image_url
-    }
-  }
-
-  triggers = {
-    version = var.run_version
-  }
-}
+# Commented out - Cloud Build will handle Docker image building
+# resource "null_resource" "run_shell_script" {
+#   provisioner "local-exec" {
+#     command = "./push-docker-image.sh"
+#     environment = {
+#       IMAGE_URL  = local.image_url
+#     }
+#   }
+#
+#   triggers = {
+#     version = var.run_version
+#   }
+# }
 
 resource "google_cloud_run_v2_service" "run_service" {
   deletion_protection = false
@@ -33,7 +34,7 @@ resource "google_cloud_run_v2_service" "run_service" {
       }
        service_account = var.service_account
   }
-  depends_on = [null_resource.run_shell_script]
+  # depends_on = [null_resource.run_shell_script]
 }
 
 
