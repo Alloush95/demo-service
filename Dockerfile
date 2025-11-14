@@ -6,9 +6,9 @@ RUN apt-get install -y ca-certificates wget
 
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN npm install --only=production
 
-COPY build/ ./build/
+COPY . ./
+RUN npm install --only=production
 
 CMD [ "node", "build/src/index.js" ]
 
