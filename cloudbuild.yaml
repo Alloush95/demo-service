@@ -21,9 +21,9 @@ steps:
     args:
       - 'build'
       - '-t'
-      - 'europe-docker.pkg.dev/${PROJECT_ID}/${_PREFIX}-curamet-repo/${_SERVICE_NAME}:${SHORT_SHA}'
+      - 'europe-docker.pkg.dev/${PROJECT_ID}/${_PREFIX}-curamet-repo/${_PREFIX}-${_SERVICE_NAME}:${SHORT_SHA}'
       - '-t'
-      - 'europe-docker.pkg.dev/${PROJECT_ID}/${_PREFIX}-curamet-repo/${_SERVICE_NAME}:latest'
+      - 'europe-docker.pkg.dev/${PROJECT_ID}/${_PREFIX}-curamet-repo/${_PREFIX}-${_SERVICE_NAME}:latest'
       - '.'
     id: 'build-docker-image'
     waitFor: ['compile-typescript']
@@ -33,7 +33,7 @@ steps:
     args:
       - 'push'
       - '--all-tags'
-      - 'europe-docker.pkg.dev/${PROJECT_ID}/${_PREFIX}-curamet-repo/${_SERVICE_NAME}'
+      - 'europe-docker.pkg.dev/${PROJECT_ID}/${_PREFIX}-curamet-repo/${_PREFIX}-${_SERVICE_NAME}'
     id: 'push-docker-image'
     waitFor: ['build-docker-image']
 
@@ -44,7 +44,7 @@ steps:
       - 'run'
       - 'deploy'
       - '${_PREFIX}-${_SERVICE_NAME}'
-      - '--image=europe-docker.pkg.dev/${PROJECT_ID}/${_PREFIX}-curamet-repo/${_SERVICE_NAME}:${SHORT_SHA}'
+      - '--image=europe-docker.pkg.dev/${PROJECT_ID}/${_PREFIX}-curamet-repo/${_PREFIX}-${_SERVICE_NAME}:${SHORT_SHA}'
       - '--region=${_REGION}'
       - '--platform=managed'
       - '--service-account=${_SERVICE_ACCOUNT}'
@@ -65,8 +65,8 @@ substitutions:
 
 # Store images in Artifact Registry
 images:
-  - 'europe-docker.pkg.dev/${PROJECT_ID}/${_PREFIX}-curamet-repo/${_SERVICE_NAME}:${SHORT_SHA}'
-  - 'europe-docker.pkg.dev/${PROJECT_ID}/${_PREFIX}-curamet-repo/${_SERVICE_NAME}:latest'
+  - 'europe-docker.pkg.dev/${PROJECT_ID}/${_PREFIX}-curamet-repo/${_PREFIX}-${_SERVICE_NAME}:${SHORT_SHA}'
+  - 'europe-docker.pkg.dev/${PROJECT_ID}/${_PREFIX}-curamet-repo/${_PREFIX}-${_SERVICE_NAME}:latest'
 
 # Build options
 options:
